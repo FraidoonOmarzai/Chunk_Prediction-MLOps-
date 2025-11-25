@@ -155,6 +155,20 @@ python scripts/download_data.py
 
 - Once your experiment code is working in the notebook, you usually move the clean, reusable parts into Python files.
 
+1. **Components:**
+   - `src/components/data_ingestion.py`
+   - `src/components/data_validation.py`
+   - `src/components/data_preprocessing.py`
+   - `src/components/model_trainer.py`
+   - `src/components/model_evaluation.py`
+
+2. **Pipelines:**
+   - `src/pipeline/training_pipeline.py`
+
+3. **Utilities:**
+   - `scripts/train.py`
+```
+
 
 3. Run Experiments From Scripts
 
