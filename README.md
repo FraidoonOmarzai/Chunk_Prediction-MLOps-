@@ -1,8 +1,8 @@
-# Chunk_Prediction-MLOps-
+<h1 align=center> Chunk_Prediction(MLOps)</h1>
 
 End-to-end MLOps project with Docker, Kubernetes, and AWS
 
-## 🚀 DEVELOPMENT PHASES:
+# 🚀 DEVELOPMENT PHASES:
 
 📊 What I'm Building: A production-ready, enterprise-grade MLOps platform with:
 
@@ -17,7 +17,7 @@ End-to-end MLOps project with Docker, Kubernetes, and AWS
 
 ---
 
-## 🎯 Business Problem
+# 🎯 Business Problem
 
 - Predict customer churn to enable proactive retention strategies, reducing customer attrition by 15% and improving customer lifetime value.
 
@@ -71,7 +71,7 @@ What's good enough?
 
 ---
 
-## 🛠️ Installation & Setup
+# 🛠️ Installation & Setup
 
 ### Prerequisites
 - Python 3.10+
@@ -106,17 +106,198 @@ python3 template.py
 
 ```
 
+### 5. Define Logger and Custom Exception
 
+---
 
-
-<!-- 
-## ML Pipeline (Phase 1)
-
+# ML Pipeline (Phase 1)
+```
 ✅ Data ingestion & validation
 ✅ Feature engineering
 ✅ Model training (4 algorithms)
 ✅ MLflow experiment tracking
 ✅ Model evaluation & selection
+```
+
+## 📥 Download Dataset
+
+### Option 1: Automatic Download (Recommended)
+```bash
+python scripts/download_data.py
+```
+
+### Option 2: Manual Download
+1. Visit: https://www.kaggle.com/datasets/blastchar/telco-customer-churn
+2. Download the dataset
+3. Save as: `data/raw/churn_data.csv`
+
+### Option 3: Kaggle API
+```bash
+# Install Kaggle
+pip install kaggle
+
+# Set up credentials (~/.kaggle/kaggle.json)
+# Then run:
+python scripts/download_data.py
+```
+
+## Run Jupyter Notebook for Experiments 
+
+### ✅ Typical Experiment Workflow
+
+1. Prototype in Jupyter Notebook
+
+- You explore ideas, try models, test functions, visualize results, etc.
+
+- This is the “playground” phase.
+
+2. Move Stable Code to Python Scripts (.py)
+
+- Once your experiment code is working in the notebook, you usually move the clean, reusable parts into Python files.
+
+
+3. Run Experiments From Scripts
+
+- Running .py files is better for:
+
+    - long training jobs
+    - large experiments
+    - automated logging
+    - reproducibility
+
+## 🎯 Run Training Pipeline
+
+### Execute Complete Pipeline
+```bash
+python scripts/train.py
+```
+
+
+### What Happens:
+1. **Data Ingestion**: Loads and splits data (80/20)
+2. **Data Validation**: Checks schema and quality
+3. **Data Preprocessing**: Cleans and transforms features
+4. **Model Training**: Trains 4 models with MLflow tracking
+5. **Model Evaluation**: Compares models and selects best
+
+### Expected Output:
+```
+======================================================================
+TRAINING PIPELINE COMPLETED SUCCESSFULLY!
+======================================================================
+
+Best Model: xgboost
+Models trained: 4
+Preprocessor saved at: artifacts/preprocessors/preprocessor.pkl
+
+Check MLflow UI for detailed experiment tracking:
+  Run: mlflow ui
+  Open: http://localhost:5000
+======================================================================
+```
+
+## 📊 View Experiments with MLflow
+
+### Start MLflow UI
+```bash
+mlflow ui
+```
+
+### Access Dashboard
+Open browser: http://localhost:5000
+
+### What You'll See:
+- All experiment runs
+- Parameters for each model
+- Metrics (accuracy, precision, recall, F1, ROC-AUC)
+- Model artifacts
+- Comparison charts
+
+## 📈 Evaluation Metrics
+
+### Model Performance Targets
+- **Recall**: ≥ 80% (catch most churners)
+- **Precision**: ≥ 70% (avoid false alarms)
+- **F1-Score**: ≥ 0.75
+- **ROC-AUC**: ≥ 0.85
+
+### Metrics Calculated
+- Accuracy
+- Precision, Recall, F1-Score
+- ROC-AUC
+- Confusion Matrix
+- Specificity, Sensitivity
+- Classification Report
+
+### View Results
+```bash
+# Check evaluation report
+cat artifacts/metrics/evaluation_report.json
+
+# Check validation report
+cat artifacts/validation_report.json
+```
+
+## 🔧 Configuration
+
+### Main Configuration (`config/config.yaml`)
+- Data paths
+- Train/test split ratio
+- Feature lists
+- Artifact locations
+- MLflow settings
+
+### Model Configuration (`config/model_config.yaml`)
+- Hyperparameters for each model
+- Algorithm-specific settings
+- Training parameters
+
+## 📝 Logs
+
+### Log Files
+Logs are saved in: `logs/`
+
+### Log Format
+```
+[2024-11-04 10:30:45] INFO - ChurnPrediction - Starting training pipeline
+[2024-11-04 10:30:46] INFO - ChurnPrediction - Data loaded: (7043, 21)
+```
+
+## 🧪 Generated Artifacts
+
+### After Training:
+```
+artifacts/
+├── models/
+│   ├── logistic_regression.pkl
+│   ├── random_forest.pkl
+│   ├── xgboost.pkl
+│   └── lightgbm.pkl
+├── preprocessors/
+│   ├── preprocessor.pkl
+│   └── preprocessor_label_encoder.pkl
+├── metrics/
+│   └── evaluation_report.json
+└── validation_report.json
+```
+
+## 🎓 Model Training Details
+
+### Models Trained:
+1. **Logistic Regression** (Baseline)
+2. **Random Forest** (Ensemble)
+3. **XGBoost** (Gradient Boosting)
+4. **LightGBM** (Fast Gradient Boosting)
+
+### Training Process:
+- Stratified train/test split (80/20)
+- Standard scaling for numerical features
+- One-hot encoding for categorical features
+- Automated hyperparameter configuration
+- MLflow tracking for all experiments
+
+<!-- 
+
 
 
 ## API & UI (Phase 2)
