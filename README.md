@@ -110,7 +110,7 @@ python3 template.py
 
 ---
 
-# ML Pipeline (Phase 1)
+# ![alt text](images/image.png)ML Pipeline (Phase 1)
 ```
 ✅ Data ingestion & validation
 ✅ Feature engineering
@@ -312,7 +312,7 @@ artifacts/
 
 ---
 
-# API & UI (Phase 2)
+# ![alt text](images/image-1.png)API & UI (Phase 2)
 ```
 ✅ FastAPI REST API
 ✅ Streamlit dashboard
@@ -518,23 +518,331 @@ print(response.json())
 
 ---
 
+# ![alt text](images/image-2.png)Containerization (Phase 3)
+```
+✅ Docker images (API, Streamlit, Training)
+✅ Docker Compose orchestration
+✅ Multi-stage builds
+✅ Pushed to Docker Hub
+```
+Phase 3 containerizes the entire application using Docker, enabling consistent deployments across any environment.
+
+---
+
+## 📦 What's Been Created
+
+### **Docker Images**
+1. **API Image** - FastAPI service
+2. **Streamlit Image** - Web dashboard
+3. **Training Image** - Model training pipeline
+
+### **Configuration Files**
+1. `docker/Dockerfile.api` - API container definition
+2. `docker/Dockerfile.streamlit` - Streamlit container
+3. `docker/Dockerfile.training` - Training container
+4. `docker-compose.yml` - Multi-container orchestration
+5. `.dockerignore` - Exclude unnecessary files
+6. `.env.example` - Environment template
+7. Build & push scripts
+
+---
+
+```bash
+
+mlops-churn-prediction/
+│
+├── docker/
+│   ├── Dockerfile.api           # NEW - API container
+│   ├── Dockerfile.streamlit     # NEW - Streamlit container
+│   └── Dockerfile.training      # NEW - Training container
+│
+├── docker-compose.yml           # NEW - Orchestration
+├── .dockerignore                # NEW - Exclude files
+├── .env.example                 # NEW - Environment template
+│
+└── scripts/
+    ├── build_images.sh/bat          # NEW - Build script
+    ├── push_images.sh/bat           # NEW - Push to Docker Hub
+    └── run_docker.sh/bat            # NEW - Run containers (.sh for Mac/Linux)
+```
+
+## 🚀 Quick Start
+
+### **Step 1: Prerequisites**
+```bash
+# Install Docker Desktop
+# Download from: https://www.docker.com/products/docker-desktop
+
+# Verify installation
+docker --version
+docker-compose --version
+```
+
+### **Step 2: Setup Environment**
+```bash
+# Edit .env file
+# Set DOCKER_USERNAME to your Docker Hub username
+nano .env  # or use your favorite editor
+```
+
+Example `.env`:
+```bash
+DOCKER_USERNAME=yourusername
+VERSION=v1.0.0
+```
+
+### **Step 3: Make Scripts Executable (Linux/Mac)**
+```bash
+chmod +x scripts/build_images.sh
+chmod +x scripts/push_images.sh
+chmod +x scripts/run_docker.sh
+```
+
+### **Step 4: Build Images**
+
+**Linux/Mac:**
+```bash
+./scripts/build_images.sh
+```
+
+**Windows:**
+```cmd
+scripts\build_images.bat
+```
+
+This will build all 3 Docker images (~5-10 minutes first time).
+
+### **Step 5: Run with Docker Compose**
+```bash
+# Start all services
+docker-compose up -d
+
+# Or use the helper script
+./scripts/run_docker.sh start
+```
+
+### **Step 6: Access Services**
+- **API**: http://localhost:8000
+- **API Docs**: http://localhost:8000/docs
+- **Streamlit**: http://localhost:8501
+- **MLflow**: http://localhost:5000
+
+---
+
+## 🏗️ Docker Architecture
+
+```
+┌──────────────────────────────────────────┐
+│         Docker Compose Network           │
+│                                          │
+│  ┌──────────┐  ┌──────────┐   ┌───────┐  │
+│  │   API    │  │Streamlit │   │MLflow │  │
+│  │  :8000   │  │  :8501   │   │ :5000 │  │
+│  └────┬─────┘  └────┬─────┘   └───┬───┘  │
+│       │             │             │      │
+│       └─────────────┴─────────────┘      │
+│            Shared Network                │
+└──────────────────────────────────────────┘
+         │                    │
+    [Volumes]            [Volumes]
+    artifacts/            mlflow/
+     logs/                 data/
+```
+
+```
+┌──────────────────────┐
+│  Dockerfile.training │ ──build──> 🐳 app-image
+└──────────────────────┘
+
+┌───────────────────────┐
+│  Dockerfile.streamlit │ ──build──> 🐳 db-image
+└───────────────────────┘
+
+┌──────────────────┐
+│  Dockerfile.api  │ ──build──> 🐳 api-image
+└──────────────────┘
+            │
+            ↓
+    ┌──────────────────┐
+    │ docker-compose   │ ──orchestrates──> 🚀 All containers running together
+    └──────────────────┘
+```
+
+---
+
+## 🚢 Pushing to Docker Hub
+
+### **Step 1: Create Docker Hub Account**
+1. Go to https://hub.docker.com
+2. Sign up for free account
+3. Create access token (Settings → Security → New Access Token)
+
+### **Step 2: Login to Docker Hub**
+```bash
+docker login
+# Enter username and password/token
+```
+
+### **Step 3: Push Images**
+
+**Linux/Mac:**
+```bash
+./scripts/push_images.sh
+```
+
+**Windows:**
+```cmd
+scripts\push_images.bat
+```
+
+**Manual Push:**
+```bash
+docker push username/churn-prediction-api:latest
+docker push username/churn-prediction-streamlit:latest
+docker push username/churn-prediction-training:latest
+```
+
+### **Step 4: Verify**
+Visit: https://hub.docker.com/u/yourusername
+
+## 🔧 Customization
+
+### **Change Ports**
+
+Edit `docker-compose.yml`:
+```yaml
+services:
+  api:
+    ports:
+      - "8080:8000"  # Change 8080 to your port
+```
+
+### **Add Environment Variables**
+
+```yaml
+services:
+  api:
+    environment:
+      - CUSTOM_VAR=value
+      - LOG_LEVEL=DEBUG
+```
+
+### **Use Different Model**
+
+Edit `.env`:
+```bash
+MODEL_PATH=artifacts/models/random_forest.pkl
+```
+
+### **Memory Limits**
+
+```yaml
+services:
+  api:
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+```
+
+---
+
+## 🧪 Testing Dockerized Services
+
+### **Test API Health**
+```bash
+curl http://localhost:8000/health
+```
+
+### **Test Prediction**
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d @test_data.json
+```
+
+### **Test Streamlit**
+Open browser: http://localhost:8501
+
+### **Test MLflow**
+Open browser: http://localhost:5000
+
+### **Run Training in Container**
+```bash
+docker-compose --profile training up training
+```
+
+---
+
+## 📊 Monitoring
+
+### **Container Stats**
+```bash
+# Real-time stats
+docker stats
+
+# Specific container
+docker stats churn-prediction-api
+```
+
+### **Logs**
+```bash
+# All logs
+docker-compose logs
+
+# Follow logs
+docker-compose logs -f
+
+# Last 100 lines
+docker-compose logs --tail=100
+```
+
+### **Health Checks**
+```bash
+# Check health
+docker ps
+
+# Inspect health
+docker inspect churn-prediction-api | grep Health -A 10
+```
+
+---
+
+## 🎯 Production Deployment
+
+### **Using Built Images**
+
+On any machine with Docker:
+```bash
+# Pull images
+docker pull username/churn-prediction-api:latest
+docker pull username/churn-prediction-streamlit:latest
+
+# Run
+docker-compose up -d
+```
+
+### **Environment-Specific Configs**
+
+```bash
+# Development
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up
+
+# Production
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+```
+
+---
+
+
+
 
 
 
 <!-- 
 
-
-
-
-
-## Containerization (Phase 3)
-
-✅ Docker images (API, Streamlit, Training)
-✅ Docker Compose orchestration
-✅ Multi-stage builds
-✅ Pushed to Docker Hub
-
-## Testing (Phase 4)
+## ![alt text](image-3.png)Testing (Phase 4)
 
 ✅ Unit tests (70%+ coverage)
 ✅ Integration tests
@@ -544,7 +852,7 @@ print(response.json())
 
 
 
-## CI/CD (Phase 5)
+## ![alt text](image-4.png)CI/CD (Phase 5)
 
 ✅ GitHub Actions workflows
 ✅ Automated testing
@@ -555,7 +863,7 @@ print(response.json())
 
 ## Cloud Deployment (Phase 6)
 
-✅ AWS EKS cluster
+✅ ![alt text](image-5.png)AWS EKS cluster
 ✅ Kubernetes orchestration
 ✅ Auto-scaling (HPA)
 ✅ Load balancing
