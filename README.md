@@ -11,7 +11,7 @@ End-to-end MLOps project with Docker, Kubernetes, and AWS
 ✅ Phase 2: API & Streamlit UI
 ✅ Phase 3: Docker Containers
 ✅ Phase 4: Testing Suite
-✅ Phase 5: CI/CD 
+✅ Phase 5: CI/CD
 ✅ Phase 6: Kubernetes Deployment (AWS)
 ```
 
@@ -74,17 +74,20 @@ What's good enough?
 # 🛠️ Installation & Setup
 
 ### Prerequisites
+
 - Python 3.10+
 - pip
 - Git
 
 ### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-.git
 cd Chunk_Prediction-MLOps-
 ```
 
 ### 2. Create Virtual Environment
+
 ```bash
 # Create virtual environment
 conda create -p ./venv python=3.11 -y
@@ -95,11 +98,13 @@ conda activate C:\Users\44787\Desktop\Chunk_Prediction-MLOps-\venv
 ```
 
 ### 3. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4. Create Directory Structure (Define template of the project)
+
 ```bash
 touch template.py
 python3 template.py
@@ -111,6 +116,7 @@ python3 template.py
 ---
 
 # ![alt text](images/image.png)ML Pipeline (Phase 1)
+
 ```
 ✅ Data ingestion & validation
 ✅ Feature engineering
@@ -122,16 +128,19 @@ python3 template.py
 ## 📥 Download Dataset
 
 ### Option 1: Automatic Download (Recommended)
+
 ```bash
 python scripts/download_data.py
 ```
 
 ### Option 2: Manual Download
+
 1. Visit: https://www.kaggle.com/datasets/blastchar/telco-customer-churn
 2. Download the dataset
 3. Save as: `data/raw/churn_data.csv`
 
 ### Option 3: Kaggle API
+
 ```bash
 # Install Kaggle
 pip install kaggle
@@ -141,7 +150,7 @@ pip install kaggle
 python scripts/download_data.py
 ```
 
-## Run Jupyter Notebook for Experiments 
+## Run Jupyter Notebook for Experiments
 
 ### ✅ Typical Experiment Workflow
 
@@ -156,6 +165,7 @@ python scripts/download_data.py
 - Once your experiment code is working in the notebook, you usually move the clean, reusable parts into Python files.
 
 1. **Components:**
+
    - `src/components/data_ingestion.py`
    - `src/components/data_validation.py`
    - `src/components/data_preprocessing.py`
@@ -163,11 +173,13 @@ python scripts/download_data.py
    - `src/components/model_evaluation.py`
 
 2. **Pipelines:**
+
    - `src/pipeline/training_pipeline.py`
 
 3. **Utilities:**
    - `scripts/train.py`
-```
+
+````
 
 
 3. Run Experiments From Scripts
@@ -184,10 +196,10 @@ python scripts/download_data.py
 ### Execute Complete Pipeline
 ```bash
 python scripts/train.py
-```
-
+````
 
 ### What Happens:
+
 1. **Data Ingestion**: Loads and splits data (80/20)
 2. **Data Validation**: Checks schema and quality
 3. **Data Preprocessing**: Cleans and transforms features
@@ -195,6 +207,7 @@ python scripts/train.py
 5. **Model Evaluation**: Compares models and selects best
 
 ### Expected Output:
+
 ```
 ======================================================================
 TRAINING PIPELINE COMPLETED SUCCESSFULLY!
@@ -213,14 +226,17 @@ Check MLflow UI for detailed experiment tracking:
 ## 📊 View Experiments with MLflow
 
 ### Start MLflow UI
+
 ```bash
 mlflow ui
 ```
 
 ### Access Dashboard
+
 Open browser: http://localhost:5000
 
 ### What You'll See:
+
 - All experiment runs
 - Parameters for each model
 - Metrics (accuracy, precision, recall, F1, ROC-AUC)
@@ -230,12 +246,14 @@ Open browser: http://localhost:5000
 ## 📈 Evaluation Metrics
 
 ### Model Performance Targets
+
 - **Recall**: ≥ 80% (catch most churners)
 - **Precision**: ≥ 70% (avoid false alarms)
 - **F1-Score**: ≥ 0.75
 - **ROC-AUC**: ≥ 0.85
 
 ### Metrics Calculated
+
 - Accuracy
 - Precision, Recall, F1-Score
 - ROC-AUC
@@ -244,6 +262,7 @@ Open browser: http://localhost:5000
 - Classification Report
 
 ### View Results
+
 ```bash
 # Check evaluation report
 cat artifacts/metrics/evaluation_report.json
@@ -255,6 +274,7 @@ cat artifacts/validation_report.json
 ## 🔧 Configuration
 
 ### Main Configuration (`config/config.yaml`)
+
 - Data paths
 - Train/test split ratio
 - Feature lists
@@ -262,6 +282,7 @@ cat artifacts/validation_report.json
 - MLflow settings
 
 ### Model Configuration (`config/model_config.yaml`)
+
 - Hyperparameters for each model
 - Algorithm-specific settings
 - Training parameters
@@ -269,9 +290,11 @@ cat artifacts/validation_report.json
 ## 📝 Logs
 
 ### Log Files
+
 Logs are saved in: `logs/`
 
 ### Log Format
+
 ```
 [2024-11-04 10:30:45] INFO - ChurnPrediction - Starting training pipeline
 [2024-11-04 10:30:46] INFO - ChurnPrediction - Data loaded: (7043, 21)
@@ -280,6 +303,7 @@ Logs are saved in: `logs/`
 ## 🧪 Generated Artifacts
 
 ### After Training:
+
 ```
 artifacts/
 ├── models/
@@ -298,12 +322,14 @@ artifacts/
 ## 🎓 Model Training Details
 
 ### Models Trained:
+
 1. **Logistic Regression** (Baseline)
 2. **Random Forest** (Ensemble)
 3. **XGBoost** (Gradient Boosting)
 4. **LightGBM** (Fast Gradient Boosting)
 
 ### Training Process:
+
 - Stratified train/test split (80/20)
 - Standard scaling for numerical features
 - One-hot encoding for categorical features
@@ -313,13 +339,13 @@ artifacts/
 ---
 
 # ![alt text](images/image-1.png)API & UI (Phase 2)
+
 ```
 ✅ FastAPI REST API
 ✅ Streamlit dashboard
 ✅ Real-time predictions
 ✅ Batch processing
 ```
-
 
 Phase 2 adds **FastAPI REST API** and **Streamlit Dashboard** for real-time predictions and interactive visualizations.
 
@@ -328,18 +354,21 @@ Phase 2 adds **FastAPI REST API** and **Streamlit Dashboard** for real-time pred
 ## 📦 New Components Added
 
 ### 1. **Prediction Pipeline** (`src/pipeline/prediction_pipeline.py`)
+
 - Loads trained models for inference
 - Handles single and batch predictions
 - Calculates risk levels
 - Feature importance extraction
 
 ### 2. **FastAPI REST API** (`api/`)
+
 - RESTful endpoints for predictions
 - Request/response validation with Pydantic
 - Auto-generated API documentation
 - Health checks and monitoring
 
 ### 3. **Streamlit Dashboard** (`streamlit_app/`)
+
 - Interactive web interface
 - Single customer prediction
 - Batch CSV upload
@@ -350,33 +379,39 @@ Phase 2 adds **FastAPI REST API** and **Streamlit Dashboard** for real-time pred
 ## 🚀 Quick Start
 
 ### Step 1: Install New Dependencies
+
 ```bash
 pip install --upgrade pip
 pip install fastapi uvicorn[standard] streamlit plotly python-multipart
 ```
 
 Or install from updated requirements.txt:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### Step 2: Ensure Model is Trained
+
 ```bash
 # If you haven't trained models yet
 python scripts/train.py
 ```
 
 ### Step 3: Start the FastAPI Server
+
 ```bash
 python run_api.py
 ```
 
 **API will be available at:**
+
 - Main API: http://localhost:8000
 - Interactive Docs: http://localhost:8000/docs
 - ReDoc: http://localhost:8000/redoc
 
 ### Step 4: Start the Streamlit Dashboard (New Terminal)
+
 ```bash
 python run_streamlit.py
 ```
@@ -388,11 +423,13 @@ python run_streamlit.py
 ## 📡 API Endpoints
 
 ### **1. Health Check**
+
 ```bash
 GET http://localhost:8000/health
 ```
 
 **Response:**
+
 ```json
 {
   "status": "healthy",
@@ -403,11 +440,13 @@ GET http://localhost:8000/health
 ```
 
 ### **2. Single Prediction**
+
 ```bash
 POST http://localhost:8000/predict
 ```
 
 **Request Body:**
+
 ```json
 {
   "customer": {
@@ -429,12 +468,13 @@ POST http://localhost:8000/predict
     "PaperlessBilling": "Yes",
     "PaymentMethod": "Electronic check",
     "MonthlyCharges": 70.35,
-    "TotalCharges": 840.50
+    "TotalCharges": 840.5
   }
 }
 ```
 
 **Response:**
+
 ```json
 {
   "prediction": "Yes",
@@ -447,35 +487,46 @@ POST http://localhost:8000/predict
 ```
 
 ### **3. Batch Prediction**
+
 ```bash
 POST http://localhost:8000/predict/batch
 ```
 
 **Request Body:**
+
 ```json
 {
   "customers": [
-    { /* customer 1 data */ },
-    { /* customer 2 data */ }
+    {
+      /* customer 1 data */
+    },
+    {
+      /* customer 2 data */
+    }
   ]
 }
 ```
 
 **Response:**
+
 ```json
 {
-  "predictions": [ /* array of predictions */ ],
+  "predictions": [
+    /* array of predictions */
+  ],
   "total_customers": 2,
   "high_risk_count": 1
 }
 ```
 
 ### **4. Model Information**
+
 ```bash
 GET http://localhost:8000/model/info
 ```
 
 ### **5. Feature Importance**
+
 ```bash
 GET http://localhost:8000/model/feature-importance
 ```
@@ -485,16 +536,19 @@ GET http://localhost:8000/model/feature-importance
 ## 🧪 Testing the API
 
 ### Option 1: Interactive Docs (Recommended)
+
 1. Start API server: `python run_api.py`
 2. Open browser: http://localhost:8000/docs
 3. Try out endpoints directly in the browser
 
 ### Option 2: Test Script
+
 ```bash
 python test_api.py
 ```
 
 ### Option 3: cURL Commands
+
 ```bash
 # Health check
 curl http://localhost:8000/health
@@ -506,6 +560,7 @@ curl -X POST http://localhost:8000/predict \
 ```
 
 ### Option 4: Python Requests
+
 ```python
 import requests
 
@@ -519,12 +574,14 @@ print(response.json())
 ---
 
 # ![alt text](images/image-2.png)Containerization (Phase 3)
+
 ```
 ✅ Docker images (API, Streamlit, Training)
 ✅ Docker Compose orchestration
 ✅ Multi-stage builds
 ✅ Pushed to Docker Hub
 ```
+
 Phase 3 containerizes the entire application using Docker, enabling consistent deployments across any environment.
 
 ---
@@ -532,11 +589,13 @@ Phase 3 containerizes the entire application using Docker, enabling consistent d
 ## 📦 What's Been Created
 
 ### **Docker Images**
+
 1. **API Image** - FastAPI service
 2. **Streamlit Image** - Web dashboard
 3. **Training Image** - Model training pipeline
 
 ### **Configuration Files**
+
 1. `docker/Dockerfile.api` - API container definition
 2. `docker/Dockerfile.streamlit` - Streamlit container
 3. `docker/Dockerfile.training` - Training container
@@ -569,6 +628,7 @@ mlops-churn-prediction/
 ## 🚀 Quick Start
 
 ### **Step 1: Prerequisites**
+
 ```bash
 # Install Docker Desktop
 # Download from: https://www.docker.com/products/docker-desktop
@@ -579,6 +639,7 @@ docker-compose --version
 ```
 
 ### **Step 2: Setup Environment**
+
 ```bash
 # Edit .env file
 # Set DOCKER_USERNAME to your Docker Hub username
@@ -586,12 +647,14 @@ nano .env  # or use your favorite editor
 ```
 
 Example `.env`:
+
 ```bash
 DOCKER_USERNAME=yourusername
 VERSION=v1.0.0
 ```
 
 ### **Step 3: Make Scripts Executable (Linux/Mac)**
+
 ```bash
 chmod +x scripts/build_images.sh
 chmod +x scripts/push_images.sh
@@ -601,11 +664,13 @@ chmod +x scripts/run_docker.sh
 ### **Step 4: Build Images**
 
 **Linux/Mac:**
+
 ```bash
 ./scripts/build_images.sh
 ```
 
 **Windows:**
+
 ```cmd
 scripts\build_images.bat
 ```
@@ -613,6 +678,7 @@ scripts\build_images.bat
 This will build all 3 Docker images (~5-10 minutes first time).
 
 ### **Step 5: Run with Docker Compose**
+
 ```bash
 # Start all services
 docker-compose up -d
@@ -622,6 +688,7 @@ docker-compose up -d
 ```
 
 ### **Step 6: Access Services**
+
 - **API**: http://localhost:8000
 - **API Docs**: http://localhost:8000/docs
 - **Streamlit**: http://localhost:8501
@@ -673,11 +740,13 @@ docker-compose up -d
 ## 🚢 Pushing to Docker Hub
 
 ### **Step 1: Create Docker Hub Account**
+
 1. Go to https://hub.docker.com
 2. Sign up for free account
 3. Create access token (Settings → Security → New Access Token)
 
 ### **Step 2: Login to Docker Hub**
+
 ```bash
 docker login
 # Enter username and password/token
@@ -686,16 +755,19 @@ docker login
 ### **Step 3: Push Images**
 
 **Linux/Mac:**
+
 ```bash
 ./scripts/push_images.sh
 ```
 
 **Windows:**
+
 ```cmd
 scripts\push_images.bat
 ```
 
 **Manual Push:**
+
 ```bash
 docker push username/churn-prediction-api:latest
 docker push username/churn-prediction-streamlit:latest
@@ -703,6 +775,7 @@ docker push username/churn-prediction-training:latest
 ```
 
 ### **Step 4: Verify**
+
 Visit: https://hub.docker.com/u/yourusername
 
 ## 🔧 Customization
@@ -710,11 +783,12 @@ Visit: https://hub.docker.com/u/yourusername
 ### **Change Ports**
 
 Edit `docker-compose.yml`:
+
 ```yaml
 services:
   api:
     ports:
-      - "8080:8000"  # Change 8080 to your port
+      - "8080:8000" # Change 8080 to your port
 ```
 
 ### **Add Environment Variables**
@@ -730,6 +804,7 @@ services:
 ### **Use Different Model**
 
 Edit `.env`:
+
 ```bash
 MODEL_PATH=artifacts/models/random_forest.pkl
 ```
@@ -742,7 +817,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
+          cpus: "1"
           memory: 1G
 ```
 
@@ -751,11 +826,13 @@ services:
 ## 🧪 Testing Dockerized Services
 
 ### **Test API Health**
+
 ```bash
 curl http://localhost:8000/health
 ```
 
 ### **Test Prediction**
+
 ```bash
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
@@ -763,12 +840,15 @@ curl -X POST http://localhost:8000/predict \
 ```
 
 ### **Test Streamlit**
+
 Open browser: http://localhost:8501
 
 ### **Test MLflow**
+
 Open browser: http://localhost:5000
 
 ### **Run Training in Container**
+
 ```bash
 docker-compose --profile training up training
 ```
@@ -778,6 +858,7 @@ docker-compose --profile training up training
 ## 📊 Monitoring
 
 ### **Container Stats**
+
 ```bash
 # Real-time stats
 docker stats
@@ -787,6 +868,7 @@ docker stats churn-prediction-api
 ```
 
 ### **Logs**
+
 ```bash
 # All logs
 docker-compose logs
@@ -799,6 +881,7 @@ docker-compose logs --tail=100
 ```
 
 ### **Health Checks**
+
 ```bash
 # Check health
 docker ps
@@ -814,6 +897,7 @@ docker inspect churn-prediction-api | grep Health -A 10
 ### **Using Built Images**
 
 On any machine with Docker:
+
 ```bash
 # Pull images
 docker pull username/churn-prediction-api:latest
@@ -836,6 +920,7 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
 ---
 
 # ![alt text](images/image-3.png)Testing (Phase 4)
+
 ```
 ✅ Unit tests (70%+ coverage)
 ✅ Integration tests
@@ -851,12 +936,14 @@ Phase 4 implements a comprehensive testing framework covering unit tests, integr
 ## 📦 What's Been Created
 
 ### **Test Structure (4 Categories)**
+
 1. **Unit Tests** - Individual component testing
 2. **Integration Tests** - Pipeline and API testing
 3. **Data Tests** - Data quality and validation
 4. **Model Tests** - Performance and fairness testing
 
 ### **Test Files**
+
 1. `pytest.ini` - Pytest configuration
 2. `coveragerc` - Coverage settings
 3. `tests/conftest.py` - Shared fixtures
@@ -868,20 +955,22 @@ Phase 4 implements a comprehensive testing framework covering unit tests, integr
 9. `scripts/run_tests.sh` - Test runner (Linux/Mac)
 10. `scripts/run_tests.bat` - Test runner (Windows)
 
-
 ## 🚀 Quick Start
 
 ### **Step 1: Install Test Dependencies**
+
 ```bash
 pip install pytest pytest-cov pytest-mock pytest-timeout
 ```
 
 Or use existing requirements.txt:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ### **Step 2: Run All Tests**
+
 ```bash
 # Linux/Mac
 chmod +x scripts/run_tests.sh
@@ -895,6 +984,7 @@ pytest -v
 ```
 
 ### **Step 3: View Coverage Report**
+
 ```bash
 ./scripts/run_tests.sh coverage
 
@@ -909,15 +999,18 @@ start htmlcov\index.html  # Windows
 ## 📊 Test Categories
 
 ### **1. Unit Tests** (`tests/unit/`)
+
 Test individual components in isolation.
 
 **Run:**
+
 ```bash
 pytest -m unit -v
 ./scripts/run_tests.sh unit
 ```
 
 **Tests:**
+
 - Data ingestion logic
 - Data preprocessing
 - Model training components
@@ -925,40 +1018,48 @@ pytest -m unit -v
 - Utility functions
 
 **Example:**
+
 ```bash
 pytest tests/unit/test_data_ingestion.py -v
 ```
 
 ### **2. Integration Tests** (`tests/integration/`)
+
 Test complete workflows and API endpoints.
 
 **Run:**
+
 ```bash
 pytest -m integration -v
 ./scripts/run_tests.sh integration
 ```
 
 **Tests:**
+
 - End-to-end training pipeline
 - API endpoint responses
 - Service communication
 - Complete prediction workflow
 
 **Example:**
+
 ```bash
 pytest tests/integration/test_api_endpoints.py -v
 ```
 
 ### **3. Data Quality Tests** (`tests/data/`)
+
 Validate data quality and integrity.
 
 **Run:**
+
 ```bash
 pytest -m data -v
 ./scripts/run_tests.sh data
 ```
 
 **Tests:**
+
 - Missing values
 - Data types
 - Valid categories
@@ -967,20 +1068,24 @@ pytest -m data -v
 - Class distribution
 
 **Example:**
+
 ```bash
 pytest tests/data/test_data_quality.py -v
 ```
 
 ### **4. Model Performance Tests** (`tests/model/`)
+
 Ensure model meets performance requirements.
 
 **Run:**
+
 ```bash
 pytest -m model -v
 ./scripts/run_tests.sh model
 ```
 
 **Tests:**
+
 - Minimum accuracy (60%)
 - Minimum precision (50%)
 - Minimum recall (50%)
@@ -990,6 +1095,7 @@ pytest -m model -v
 - Fairness across groups
 
 **Example:**
+
 ```bash
 pytest tests/model/test_model_performance.py -v
 ```
@@ -1025,16 +1131,19 @@ pytest -m "not slow"
 ### **Minimum Coverage: 70%**
 
 Check coverage:
+
 ```bash
 pytest --cov=src --cov=api --cov-report=term-missing
 ```
 
 ### **Coverage Reports Generated:**
+
 1. **Terminal** - Summary in console
 2. **HTML** - Detailed report in `htmlcov/`
 3. **XML** - For CI/CD integration
 
 ### **View HTML Report:**
+
 ```bash
 # Generate report
 pytest --cov=src --cov=api --cov-report=html
@@ -1045,11 +1154,10 @@ open htmlcov/index.html
 
 ---
 
-
-
 ## 📋 Test Runner Commands
 
 ### **Basic Commands**
+
 ```bash
 # Run all tests
 pytest
@@ -1074,6 +1182,7 @@ pytest tests/unit/test_data_ingestion.py::test_function_name
 ```
 
 ### **Script Commands**
+
 ```bash
 ./scripts/run_tests.sh all        # All tests
 ./scripts/run_tests.sh unit       # Unit tests
@@ -1089,10 +1198,10 @@ pytest tests/unit/test_data_ingestion.py::test_function_name
 
 ---
 
-
 ## 📊 Performance Testing
 
 ### **Test Execution Time**
+
 ```bash
 # Show slowest tests
 pytest --durations=10
@@ -1102,6 +1211,7 @@ pytest --timeout=60
 ```
 
 ### **Parallel Execution**
+
 ```bash
 # Install plugin
 pip install pytest-xdist
@@ -1111,9 +1221,13 @@ pytest -n auto
 ```
 
 ---
+
 ---
+
 ---
+
 ## ![alt text](image-4.png)CI/CD (Phase 5)
+
 ```
 ✅ GitHub Actions workflows
 ✅ Automated testing
@@ -1123,13 +1237,7 @@ pytest -n auto
 ✅ Deployment automation
 ```
 
-
-
-
-
-
-
-<!-- 
+<!--
 
 
 

@@ -69,14 +69,10 @@ def download_with_kaggle_api():
         logger.info("Downloading dataset from Kaggle")
 
         # Download from Kaggle
-        kaggle.api.dataset_download_files(
-            "blastchar/telco-customer-churn", path="data/raw", unzip=True
-        )
+        kaggle.api.dataset_download_files("blastchar/telco-customer-churn", path="data/raw", unzip=True)
 
         # Rename file
-        os.rename(
-            "data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv", "data/raw/churn_data.csv"
-        )
+        os.rename("data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv", "data/raw/churn_data.csv")
 
         logger.info("Dataset downloaded successfully from Kaggle")
 
@@ -115,8 +111,7 @@ def create_sample_data():
             "TechSupport": ["Yes", "No", "No internet service"] * 33 + ["Yes"],
             "StreamingTV": ["Yes", "No", "No internet service"] * 33 + ["Yes"],
             "StreamingMovies": ["Yes", "No", "No internet service"] * 33 + ["Yes"],
-            "Contract": ["Month-to-month", "One year", "Two year"] * 33
-            + ["Month-to-month"],
+            "Contract": ["Month-to-month", "One year", "Two year"] * 33 + ["Month-to-month"],
             "PaperlessBilling": ["Yes", "No"] * 50,
             "PaymentMethod": [
                 "Electronic check",

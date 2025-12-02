@@ -1,5 +1,7 @@
 # Why Multi-Stage Builds vs Normal Dockerfiles
+
 🔴 Traditional Single-Stage Dockerfile (The Old Way)
+
 ```dockerfile
 FROM python:3.10-slim
 
@@ -24,6 +26,7 @@ COPY . .
 EXPOSE 8501
 CMD ["streamlit", "run", "app.py"]
 ```
+
 ❌ Problems with Single-Stage:
 
 1. Bloated Image: Final image contains unnecessary build tools (gcc, g++, make)
@@ -31,13 +34,14 @@ CMD ["streamlit", "run", "app.py"]
 3. Security Risk: More packages = more potential vulnerabilities
 4. Slower Deployment: Larger images take longer to push/pull
 
-
 🟢 Multi-Stage Dockerfile (Modern Way)
 Stage 1: Builder
+
 ```
 dockerfileFROM python:3.10-slim AS builder
 # Purpose: Compile and build dependencies
 ```
+
 What happens here:
 
 - Installs build tools (gcc, make, compilers)
@@ -96,6 +100,7 @@ Stage 2 (Runtime):
 ❌ All construction tools left behind
 ❌ Workers go home
 ```
+
 Only the finished product moves forward!
 
 🔍 Step-by-Step: What Happens in Your Dockerfile
@@ -111,6 +116,7 @@ RUN pip install -r requirements.txt
 # - pandas (needs C++ compiler)
 # - scikit-learn (needs gcc)
 ```
+
 Result: Compiled .so files (Linux binaries) in /usr/local/lib/python3.10/site-packages
 
 Runtime Stage (Final):
@@ -200,6 +206,7 @@ Multi-stage: Only your app processes
                ↓
         FINAL IMAGE (450 MB)
 ```
+
 🎓 Summary
 
 - Normal Dockerfile = Kitchen with all cooking equipment left out forever
@@ -285,12 +292,15 @@ docker-compose exec api bash
 ```
 
 ---
+
 ---
+
 ---
 
 ## 🔧 Test Configuration
 
 ### **pytest.ini**
+
 ```ini
 [pytest]
 markers =
@@ -304,6 +314,7 @@ addopts = -v --strict-markers --cov-fail-under=70
 ```
 
 ### **.coveragerc**
+
 ```ini
 [run]
 source = src,api
@@ -321,23 +332,28 @@ show_missing = True
 Located in `tests/conftest.py`, available to all tests:
 
 ### **Configuration Fixtures**
+
 - `test_config` - Test configuration
 - `temp_dir` - Temporary directory
 
 ### **Data Fixtures**
+
 - `sample_customer_data` - Single customer dict
 - `sample_dataframe` - DataFrame with 5 customers
 - `sample_csv_file` - Temporary CSV file
 
 ### **Model Fixtures**
+
 - `mock_model` - Trained model mock
 - `mock_preprocessor` - Preprocessor mock
 - `prediction_pipeline_mock` - Complete pipeline mock
 
 ### **API Fixtures**
+
 - `api_client` - FastAPI test client
 
 ### **Utility Fixtures**
+
 - `mock_logger` - Suppress log output
 - `mock_mlflow` - Mock MLflow tracking
 
@@ -346,6 +362,7 @@ Located in `tests/conftest.py`, available to all tests:
 ## 🎨 Writing New Tests
 
 ### **Example Unit Test**
+
 ```python
 import pytest
 
@@ -358,6 +375,7 @@ def test_my_function(sample_dataframe):
 ```
 
 ### **Example Integration Test**
+
 ```python
 @pytest.mark.integration
 @pytest.mark.api
@@ -368,6 +386,7 @@ def test_api_endpoint(api_client):
 ```
 
 ### **Example Parametrized Test**
+
 ```python
 @pytest.mark.parametrize("input,expected", [
     (0.1, 'Low'),
@@ -384,26 +403,31 @@ def test_risk_levels(input, expected):
 ## 🔍 Debugging Tests
 
 ### **Run with Debug Info**
+
 ```bash
 pytest -vv --tb=long
 ```
 
 ### **Show Print Statements**
+
 ```bash
 pytest -s
 ```
 
 ### **Drop into Debugger on Failure**
+
 ```bash
 pytest --pdb
 ```
 
 ### **Show Fixtures**
+
 ```bash
 pytest --fixtures
 ```
 
 ### **Collect Tests Without Running**
+
 ```bash
 pytest --collect-only
 ```
@@ -413,6 +437,7 @@ pytest --collect-only
 ## 🚀 CI/CD Integration
 
 ### **GitHub Actions Example**
+
 ```yaml
 name: Tests
 
@@ -438,5 +463,7 @@ jobs:
 ```
 
 ---
+
 ---
+
 ---
