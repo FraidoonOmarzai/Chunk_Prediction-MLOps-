@@ -1533,15 +1533,11 @@ https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/actions
 
 ### **Status Badges**
 
-Add to README.md:
-
 ![CI](https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/workflows/CI%20Pipeline/badge.svg)
 
 ![Docker](https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/workflows/Docker%20Build%20and%20Push/badge.svg)
 
 ![Security](https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/workflows/Security%20Scanning/badge.svg)
-
-[![codecov](https://codecov.io/gh/FraidoonOmarzai/Chunk_Prediction-MLOps-/branch/main/graph/badge.svg)](https://codecov.io/gh/FraidoonOmarzai/Chunk_Prediction-MLOps-)
 
 ---
 
