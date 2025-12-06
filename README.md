@@ -1236,6 +1236,7 @@ pytest -n auto
 ✅ Code quality checks
 ✅ Deployment automation
 ```
+
 Phase 5 implements comprehensive CI/CD pipelines using GitHub Actions for automated testing, building, security scanning, and deployment.
 
 ---
@@ -1243,24 +1244,25 @@ Phase 5 implements comprehensive CI/CD pipelines using GitHub Actions for automa
 ## 📦 What's Been Created
 
 ### **GitHub Actions Workflows (6)**
+
 1. **CI Pipeline** (`ci.yml`) - Automated testing & validation
 2. **Docker Build** (`docker-build.yml`) - Build & push Docker images
 3. **Code Quality** (`code-quality.yml`) - Linting & formatting
 4. **Security** (`security.yml`) - Vulnerability scanning
 5. **Deployment** (`deploy.yml`) - AWS EKS deployment
-6. **Release** (`release.yml`) - Automated releases
 
 ### **Configuration Files (4)**
-7. `.pre-commit-config.yaml` - Pre-commit hooks
-8. `.flake8` - Flake8 linting config
-9. `pyproject.toml` - Black, isort, mypy config
-10. GitHub issue/PR templates
+
+6. `.pre-commit-config.yaml` - Pre-commit hooks
+7. `.flake8` - Flake8 linting config
+8. `pyproject.toml` - Black, isort, mypy config
 
 ---
 
 ## 🚀 Quick Start
 
 ### **Step 1: Setup GitHub Repository**
+
 ```bash
 # Initialize git (if not already)
 git init
@@ -1277,11 +1279,11 @@ git push -u origin main
 Go to: **Settings → Secrets and variables → Actions**
 
 Add these secrets:
+
 - `DOCKER_USERNAME` - Your Docker Hub username
 - `DOCKER_PASSWORD` - Your Docker Hub password/token
 - `AWS_ACCESS_KEY_ID` - AWS access key
 - `AWS_SECRET_ACCESS_KEY` - AWS secret key
-- `SLACK_WEBHOOK_URL` - (Optional) For notifications
 
 ### **Step 3: Enable GitHub Actions**
 
@@ -1289,12 +1291,14 @@ GitHub Actions should be enabled by default. Verify at:
 **Settings → Actions → General**
 
 ### **Step 4: Install Pre-commit Hooks (Local)**
+
 ```bash
 pip install pre-commit
 pre-commit install
 ```
 
 ### **Step 5: Make Your First Commit**
+
 ```bash
 git add .
 git commit -m "Setup CI/CD pipeline"
@@ -1340,10 +1344,12 @@ GitHub Actions will automatically trigger! 🎉
 ### **1. CI Pipeline** (`ci.yml`)
 
 **Triggers:**
+
 - Push to `main` or `develop`
 - Pull requests to `main` or `develop`
 
 **Jobs:**
+
 - ✅ Run tests (Python 3.9, 3.10, 3.11)
 - ✅ Check code quality (flake8, black, isort)
 - ✅ Security scanning (Bandit, Safety)
@@ -1351,6 +1357,7 @@ GitHub Actions will automatically trigger! 🎉
 - ✅ Upload coverage to Codecov
 
 **Usage:**
+
 ```bash
 # Automatically runs on push
 git push origin main
@@ -1364,12 +1371,14 @@ https://github.com/youruser/yourrepo/actions
 ### **2. Docker Build & Push** (`docker-build.yml`)
 
 **Triggers:**
+
 - Push to `main`
 - Tags (`v*`)
 - Manual trigger
 - Pull requests (build only, no push)
 
 **Jobs:**
+
 - ✅ Build API, Streamlit, Training images
 - ✅ Multi-arch builds (amd64, arm64)
 - ✅ Push to Docker Hub with tags
@@ -1378,6 +1387,7 @@ https://github.com/youruser/yourrepo/actions
 - ✅ Cleanup old images
 
 **Tags Created:**
+
 - `latest` - Latest main branch
 - `v1.0.0` - Specific version
 - `main-abc123` - Git commit SHA
@@ -1388,6 +1398,7 @@ https://github.com/youruser/yourrepo/actions
 ### **3. Code Quality** (`code-quality.yml`)
 
 **Checks:**
+
 - ✅ Black formatting
 - ✅ isort import sorting
 - ✅ Flake8 linting
@@ -1398,6 +1409,7 @@ https://github.com/youruser/yourrepo/actions
 - ✅ Dependency licenses
 
 **Auto-fix:**
+
 - Automatically fixes formatting on PRs
 - Commits fixes back to branch
 
@@ -1406,6 +1418,7 @@ https://github.com/youruser/yourrepo/actions
 ### **4. Security Scanning** (`security.yml`)
 
 **Scans:**
+
 - ✅ Dependency vulnerabilities (Safety, pip-audit)
 - ✅ Code security (Bandit, Semgrep)
 - ✅ Secret detection (Gitleaks, TruffleHog)
@@ -1414,6 +1427,7 @@ https://github.com/youruser/yourrepo/actions
 - ✅ Compliance checks
 
 **Schedule:**
+
 - Runs on every push
 - Weekly full scan (Sunday midnight)
 
@@ -1422,15 +1436,18 @@ https://github.com/youruser/yourrepo/actions
 ### **5. Deployment** (`deploy.yml`)
 
 **Environments:**
+
 - **Staging** - Automatic on tags
 - **Production** - Manual approval required
 
 **Strategy:**
+
 - Blue-Green deployment
 - Health checks
 - Automatic rollback on failure
 
 **Process:**
+
 1. Configure AWS credentials
 2. Update kubeconfig
 3. Deploy green environment
@@ -1440,6 +1457,7 @@ https://github.com/youruser/yourrepo/actions
 7. Scale down blue
 
 **Trigger:**
+
 ```bash
 # Tag for production deploy
 git tag v1.0.0
@@ -1451,37 +1469,19 @@ git push origin v1.0.0
 
 ---
 
-### **6. Release Automation** (`release.yml`)
-
-**Triggers:**
-- New tag (`v*`)
-- Manual trigger
-
-**Actions:**
-- ✅ Generate changelog
-- ✅ Create GitHub release
-- ✅ Publish documentation
-- ✅ Send notifications
-
-**Creating a Release:**
-```bash
-git tag -a v1.0.0 -m "Release version 1.0.0"
-git push origin v1.0.0
-```
-
----
-
 ## 🛠️ Local Development
 
 ### **Pre-commit Hooks**
 
 Install hooks:
+
 ```bash
 pip install pre-commit
 pre-commit install
 ```
 
 Run manually:
+
 ```bash
 # Run on all files
 pre-commit run --all-files
@@ -1526,6 +1526,7 @@ pytest -m integration
 ## 📈 Monitoring CI/CD
 
 ### **View Workflow Runs**
+
 ```
 https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/actions
 ```
@@ -1533,28 +1534,23 @@ https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/actions
 ### **Status Badges**
 
 Add to README.md:
+
 ```markdown
 ![CI](https://github.com/youruser/yourrepo/workflows/CI%20Pipeline/badge.svg)
 ![Docker](https://github.com/youruser/yourrepo/workflows/Docker%20Build%20%26%20Push/badge.svg)
+![Security](https://github.com/youruser/yourrepo/workflows/Security%20Scanning/badge.svg)
+[![codecov](https://codecov.io/gh/youruser/yourrepo/branch/main/graph/badge.svg)](https://codecov.io/gh/youruser/yourrepo)
 ```
 
-<!-- ![Security](https://github.com/youruser/yourrepo/workflows/Security%20Scanning/badge.svg) -->
-<!-- [![codecov](https://codecov.io/gh/youruser/yourrepo/branch/main/graph/badge.svg)](https://codecov.io/gh/youruser/yourrepo) -->
+---
 
+## ![alt text](images/image-5.png)Cloud Deployment (Phase 6)
 
-
-<!--
-
-
-
-
-
-
-## Cloud Deployment (Phase 6)
-
-✅ ![alt text](image-5.png)AWS EKS cluster
+```
+✅ AWS EKS cluster
 ✅ Kubernetes orchestration
 ✅ Auto-scaling (HPA)
 ✅ Load balancing
 ✅ Monitoring & logging
-✅ High availability -->
+✅ High availability
+```
