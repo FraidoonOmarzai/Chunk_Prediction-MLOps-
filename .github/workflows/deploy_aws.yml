@@ -8,10 +8,10 @@ on:
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: churn-prediction
-  ECS_SERVICE: llmops-live-service
+  ECS_SERVICE: churn-prediction-service
   ECS_CLUSTER: chrun-prediction-cluster
   ECS_TASK_DEFINITION: .github/workflows/task_defination.json
-  CONTAINER_NAME: llmops-live-container
+  CONTAINER_NAME: churn-prediction
   DOCKERHUB_IMAGE: fraidoonjan/churn-prediction-api
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
   # 1. Pull from Docker Hub & Push to ECR
   # -------------------------------
   build-and-push:
-    name: Build & Push Docker Image
+    name: Pull from Docker Hub & Push to ECR
     needs: [check-status]
     runs-on: ubuntu-latest
     outputs:
