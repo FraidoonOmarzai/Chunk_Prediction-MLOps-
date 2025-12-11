@@ -26,16 +26,7 @@
                     "name": "ENV",
                     "value": "production"
                 }
-            ],
-            "logConfiguration": {
-                "logDriver": "awslogs",
-                "options": {
-                    "awslogs-group": "/ecs/churn-prediction",
-                    "awslogs-region": "us-east-1",
-                    "awslogs-stream-prefix": "ecs",
-                    "awslogs-create-group": "true"
-                }
-            }
+            ]
         }
     ]
 }
