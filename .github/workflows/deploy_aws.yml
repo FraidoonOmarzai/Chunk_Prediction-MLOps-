@@ -1,7 +1,7 @@
-name: CI/CD to ECS Fargate
+name: CD to ECS Fargate
 on:
   workflow_run:
-    workflows: ["CI Pipeline"] # Must match the "name" field in ci.yml
+    # workflows: ["CI Pipeline"] # Must match the "name" field in ci.yml
     branches:
       - main
       - DeployOnAWS
