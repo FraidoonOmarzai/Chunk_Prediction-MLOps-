@@ -65,7 +65,7 @@ jobs:
           docker pull ${{ env.DOCKERHUB_IMAGE }}:latest
 
           # Tag the image for ECR
-          docker tag ${{ env.DOCKERHUB_IMAGE }}:$IMAGE_TAG $IMAGE_URI
+          docker tag ${{ env.DOCKERHUB_IMAGE }}:latest $IMAGE_URI
 
           # Push to ECR
           docker push $IMAGE_URI
