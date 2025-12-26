@@ -1,4 +1,4 @@
-<h1 align=center> Chunk_Prediction(MLOps)</h1>
+<h1 align=center> Churn_Prediction(MLOps)</h1>
 
 End-to-end MLOps project with Docker, Kubernetes, and AWS
 
@@ -1468,10 +1468,9 @@ https://github.com/FraidoonOmarzai/Chunk_Prediction-MLOps-/actions
 ## ![alt text](images/image-5.png)Cloud Deployment (Phase 6)
 
 ```
+✅ Local Kubernetes Development
 ✅ AWS EKS cluster
 ✅ Kubernetes orchestration
-✅ Auto-scaling (HPA)
 ✅ Load balancing
-✅ Monitoring & logging
 ✅ High availability
 ```

@@ -749,3 +749,130 @@ ECS cluster -> ECS services -> click on Tasks -> Click on Public ID -> add 8000 
 ---
 
 ---
+
+<h1 aling=center>Running Kubernetes Locally & Deploying to AWS EKS </h1>
+
+`Guide you through running your churn prediction application locally, then setting up AWS deployment with CI/CD.`
+
+## Part 1: Running Locally
+#### Prerequisites
+- Install these tools first:
+##### Option A: Minikube (Recommended for beginners)
+```bash
+# macOS
+brew install minikube
+
+# Linux
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# Windows (with Chocolatey)
+choco install minikube
+```
+##### Option B: Kind (Kubernetes in Docker)
+```bash
+# macOS/Linux
+brew install kind
+# or
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+```
+##### Option C: Docker Desktop (Easiest if you have it)
+
+- Enable Kubernetes in Docker Desktop settings
+
+- Also install kubectl:
+```bash
+# macOS
+brew install kubectl
+
+# Linux
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+```
+
+### Step-by-Step Local Deployment
+1. Start your local Kubernetes cluster
+```bash
+# If using Minikube
+minikube start --memory=4096 --cpus=2
+
+# If using Kind
+kind create cluster --name churn-prediction
+
+# If using Docker Desktop - just ensure Kubernetes is enabled
+```
+
+2. Verify cluster is running
+```bash
+kubectl cluster-info
+kubectl get nodes
+```
+3. Apply your Kubernetes manifests
+```bash
+# Create namespace
+kubectl apply -f namespace.yaml
+
+# Deploy API
+kubectl apply -f api.yaml
+
+# Deploy Streamlit frontend
+kubectl apply -f streamlit.yaml
+```
+4. Check deployment status
+
+```bash
+# Watch pods starting up
+kubectl get pods -n churn-prediction -w
+
+# Check services
+kubectl get svc -n churn-prediction
+
+# Check deployment details
+kubectl get deployments -n churn-prediction
+```
+5. Access your applications locally
+- Since you're using LoadBalancer services locally, you need to expose them:
+For Minikube:
+```bash
+# In separate terminal windows, run:
+minikube tunnel
+
+# Then get the external IPs
+kubectl get svc -n churn-prediction
+```
+- For Kind or Docker Desktop:
+
+```bash
+# Port forward the services instead
+kubectl port-forward -n churn-prediction svc/streamlit-service 8501:80
+kubectl port-forward -n churn-prediction svc/api-service 8000:80
+```
+6. Access your app
+
+```
+Streamlit UI: http://localhost:8501
+API: http://localhost:8000
+API Health: http://localhost:8000/health
+```
+- Troubleshooting Local Setup
+
+```bash
+# View pod logs
+kubectl logs -n churn-prediction -l app=api
+kubectl logs -n churn-prediction -l app=streamlit
+
+# Describe pod for issues
+kubectl describe pod -n churn-prediction <pod-name>
+
+# Restart deployment
+kubectl rollout restart deployment/api -n churn-prediction
+kubectl rollout restart deployment/streamlit -n churn-prediction
+
+# Delete and reapply
+kubectl delete -f api.yaml
+kubectl apply -f api.yaml
+```
+
+## Part 2: AWS Deployment with CI/CD
